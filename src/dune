@@ -1,0 +1,10 @@
+(library
+ (public_name ocb)
+ (modules color gen icon option style verdana)
+ (private_modules option))
+
+(executable
+ (name main)
+ (public_name ocb)
+ (modules main)
+ (libraries ocb))
