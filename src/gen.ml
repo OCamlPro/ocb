@@ -6,14 +6,14 @@ let calc_width =
     let total = ref 0. in
     String.iter
       (fun c ->
-        let code = Char.code c in
-        let width =
-          if code >= len then
-            fallback
-          else
-            table.(code)
-        in
-        total := !total +. width )
+          let code = Char.code c in
+          let width =
+            if code >= len then
+              fallback
+            else
+              table.(code)
+          in
+          total := !total +. width )
       text;
     !total
 
@@ -41,7 +41,7 @@ let create_accessible_text label status =
     Format.sprintf "%s: %s" label status
 
 let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
-    ~status =
+  ~status =
   let st_text_width = calc_width status in
   let st_rect_width = st_text_width +. 115. in
   let status = sanitize status in
@@ -50,7 +50,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
   match style with
   | Classic ->
     Format.fprintf fmt
-      {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="%s">
+      {|<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <linearGradient id="a" x2="0" y2="100%%">
     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
@@ -70,7 +70,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       Color.pp color st_rect_width st_text_width status st_text_width status
   | Flat ->
     Format.fprintf fmt
-      {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="%s">
+      {|<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <g>
     <rect fill="#%a" x="0" width="%f" height="200"/>
@@ -84,8 +84,8 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       st_text_width status st_text_width status
 
 let mk fmt ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
-    ?(icon = None) ?(icon_width = 13.) ?(label_color = Color.Custom "555")
-    ?(scale = 1.) ~status () =
+  ?(icon = None) ?(icon_width = 13.) ?(label_color = Color.Custom "555")
+  ?(scale = 1.) ~status () =
   if String.equal label "" && Option.is_none icon then
     bare fmt ~status ~color ~style ~scale
   else
@@ -123,7 +123,7 @@ let mk fmt ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
     match style with
     | Classic ->
       Format.fprintf fmt
-        {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">
+        {|<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%f" height="%f" viewBox="0 0 %f 200" %s role="img" aria-label="%s">
   <title>%s</title>
   <linearGradient id="a" x2="0" y2="100%%">
     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
@@ -150,7 +150,7 @@ let mk fmt ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
         (icon, icon_width, 130.)
     | Flat ->
       Format.fprintf fmt
-        {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">
+        {|<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">
   <title>%s</title>
   <g>
     <rect fill="#%a" width="%f" height="200"/>
