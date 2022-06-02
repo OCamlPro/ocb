@@ -1,3 +1,5 @@
+let counter = ref 0
+
 let calc_width =
   let table = Verdana.table in
   let len = Array.length table in
@@ -83,7 +85,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       width height st_rect_width status status Color.pp color st_rect_width
       st_text_width status st_text_width status
 
-let mk fmt ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
+let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
     ?(icon = None) ?(icon_width = 13.) ?(label_color = Color.Custom "555")
     ?(scale = 1.) ~status () =
   if String.equal label "" && Option.is_none icon then
@@ -122,18 +124,19 @@ let mk fmt ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
     let svg_height = scale *. 20. in
     match style with
     | Classic ->
+      incr counter;
       Format.fprintf fmt
         {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">
   <title>%s</title>
-  <linearGradient id="a" x2="0" y2="100%%">
+  <linearGradient id="ocaml-ocb-a-%d" x2="0" y2="100%%">
     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
     <stop offset="1" stop-opacity=".1"/>
   </linearGradient>
-  <mask id="m"><rect width="%f" height="200" rx="30" fill="#FFF"/></mask>
-  <g mask="url(#m)">
+  <mask id="ocaml-ocb-m-%d"><rect width="%f" height="200" rx="30" fill="#FFF"/></mask>
+  <g mask="url(#ocaml-ocb-m-%d)">
     <rect width="%f" height="200" fill="#%a"/>
     <rect width="%f" height="200" fill="#%a" x="%f"/>
-    <rect width="%f" height="200" fill="url(#a)"/>
+    <rect width="%f" height="200" fill="url(#ocaml-ocb-a-%d)"/>
   </g>
   <g aria-hidden="true" fill="#fff" text-anchor="start" font-family="Verdana,DejaVu Sans,sans-serif" font-size="110">
     <text x="%f" y="148" textLength="%f" fill="#000" opacity="0.25">%s</text>
@@ -142,9 +145,9 @@ let mk fmt ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
     <text x="%f" y="138" textLength="%f">%s</text>
   </g>
   %a</svg>@.|}
-        svg_width svg_height width xlink accessible_text accessible_text width
+        svg_width svg_height width xlink accessible_text accessible_text !counter !counter width !counter
         sb_rect_width Color.pp label_color st_rect_width Color.pp color
-        sb_rect_width width (sb_text_start +. 10.) sb_text_width label
+        sb_rect_width width !counter (sb_text_start +. 10.) sb_text_width label
         sb_text_start sb_text_width label (sb_rect_width +. 55.) st_text_width
         status (sb_rect_width +. 45.) st_text_width status Icon.pp
         (icon, icon_width, 130.)
