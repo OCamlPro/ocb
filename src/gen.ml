@@ -8,14 +8,14 @@ let calc_width =
     let total = ref 0. in
     String.iter
       (fun c ->
-        let code = Char.code c in
-        let width =
-          if code >= len then
-            fallback
-          else
-            table.(code)
-        in
-        total := !total +. width )
+          let code = Char.code c in
+          let width =
+            if code >= len then
+              fallback
+            else
+              table.(code)
+          in
+          total := !total +. width )
       text;
     !total
 
@@ -43,7 +43,7 @@ let create_accessible_text label status =
     Format.sprintf "%s: %s" label status
 
 let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
-    ~status =
+  ~status () =
   let st_text_width = calc_width status in
   let st_rect_width = st_text_width +. 115. in
   let status = sanitize status in
@@ -86,10 +86,10 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       st_text_width status st_text_width status
 
 let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
-    ?(icon = None) ?(icon_width = 13.) ?(label_color = Color.Custom "555")
-    ?(scale = 1.) ~status () =
+  ?(icon = None) ?(icon_width = 13.) ?(label_color = Color.Custom "555")
+  ?(scale = 1.) ~status () =
   if String.equal label "" && Option.is_none icon then
-    bare fmt ~status ~color ~style ~scale
+    bare fmt ~status ~color ~style ~scale ()
   else
     let icon_width = icon_width *. 10. in
     let icon_span_width =

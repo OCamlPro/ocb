@@ -1,3 +1,8 @@
+## 0.2 - 2022-06-21
+
+- fix unerasable-optional-argument warnings for the `Gen.bare` function
+- add a unique id to avoid rendering issues
+
 ## 0.0.1 - 2021-01-07
 
-First release
+- first release
