@@ -44,7 +44,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
   match style with
   | Classic ->
     Format.fprintf fmt
-      {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="%s">
+      {|<svg xmlns="http://www.w3.org/2000/svg" width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <linearGradient id="a" x2="0" y2="100%%">
     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
@@ -64,7 +64,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       Color.pp color st_rect_width st_text_width status st_text_width status
   | Flat ->
     Format.fprintf fmt
-      {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="%s">
+      {|<svg xmlns="http://www.w3.org/2000/svg" width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <g>
     <rect fill="#%a" x="0" width="%f" height="200"/>
@@ -110,7 +110,7 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
     | Classic ->
       incr counter;
       Format.fprintf fmt
-        {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">
+        {|<svg xmlns="http://www.w3.org/2000/svg"%s width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <linearGradient id="ocaml-ocb-a-%d" x2="0" y2="100%%">
     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
@@ -129,7 +129,7 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
     <text x="%f" y="138" textLength="%f">%s</text>
   </g>
   %a</svg>@.|}
-        svg_width svg_height width xlink accessible_text accessible_text
+        xlink svg_width svg_height width accessible_text accessible_text
         !counter !counter width !counter sb_rect_width Color.pp label_color
         st_rect_width Color.pp color sb_rect_width width !counter
         (sb_text_start +. 10.) sb_text_width label sb_text_start sb_text_width
@@ -137,7 +137,7 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
         st_text_width status Icon.pp (icon, icon_width, 130.)
     | Flat ->
       Format.fprintf fmt
-        {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">
+        {|<svg xmlns="http://www.w3.org/2000/svg"%s width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <g>
     <rect fill="#%a" width="%f" height="200"/>
@@ -150,7 +150,7 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
     <text x="%f" y="138" textLength="%f">%s</text>
   </g>
   %a</svg>@.|}
-        svg_width svg_height width xlink accessible_text accessible_text
+        xlink svg_width svg_height width accessible_text accessible_text
         Color.pp label_color sb_rect_width Color.pp color sb_rect_width
         st_rect_width (sb_text_start +. 10.) sb_text_width label sb_text_start
         sb_text_width label (sb_rect_width +. 55.) st_text_width status
