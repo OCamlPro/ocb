@@ -8,14 +8,9 @@ let calc_width =
     let total = ref 0. in
     String.iter
       (fun c ->
-          let code = Char.code c in
-          let width =
-            if code >= len then
-              fallback
-            else
-              table.(code)
-          in
-          total := !total +. width )
+        let code = Char.code c in
+        let width = if code >= len then fallback else table.(code) in
+        total := !total +. width )
       text;
     !total
 
@@ -37,13 +32,10 @@ let sanitize s =
   Buffer.contents buffer
 
 let create_accessible_text label status =
-  if String.equal label "" then
-    status
-  else
-    Format.sprintf "%s: %s" label status
+  if String.equal label "" then status else Format.sprintf "%s: %s" label status
 
 let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
-  ~status () =
+    ~status () =
   let st_text_width = calc_width status in
   let st_rect_width = st_text_width +. 115. in
   let status = sanitize status in
@@ -85,26 +77,20 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       width height st_rect_width status status Color.pp color st_rect_width
       st_text_width status st_text_width status
 
-let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue) ?(style = Style.Classic)
-  ?(icon = None) ?(icon_width = 13.) ?(label_color = Color.Custom "555")
-  ?(scale = 1.) ~status () =
+let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
+    ?(style = Style.Classic) ?(icon = None) ?(icon_width = 13.)
+    ?(label_color = Color.Custom "555") ?(scale = 1.) ~status () =
   if String.equal label "" && Option.is_none icon then
     bare fmt ~status ~color ~style ~scale ()
   else
     let icon_width = icon_width *. 10. in
     let icon_span_width =
-      if Option.is_none icon then
-        0.
-      else if String.equal label "" then
-        icon_width -. 18.
-      else
-        icon_width +. 30.
+      if Option.is_none icon then 0.
+      else if String.equal label "" then icon_width -. 18.
+      else icon_width +. 30.
     in
     let sb_text_start =
-      if Option.is_none icon then
-        50.
-      else
-        icon_width +. 50.
+      if Option.is_none icon then 50. else icon_width +. 50.
     in
     let sb_text_width = calc_width label in
     let st_text_width = calc_width status in
@@ -112,10 +98,8 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue) ?(style = St
     let st_rect_width = st_text_width +. 100. in
     let width = sb_rect_width +. st_rect_width in
     let xlink =
-      if Option.is_none icon then
-        ""
-      else
-        {| xmlns:xlink="http://www.w3.org/1999/xlink"|}
+      if Option.is_none icon then ""
+      else {| xmlns:xlink="http://www.w3.org/1999/xlink"|}
     in
     let label = sanitize label in
     let status = sanitize status in
@@ -145,12 +129,12 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue) ?(style = St
     <text x="%f" y="138" textLength="%f">%s</text>
   </g>
   %a</svg>@.|}
-        svg_width svg_height width xlink accessible_text accessible_text !counter !counter width !counter
-        sb_rect_width Color.pp label_color st_rect_width Color.pp color
-        sb_rect_width width !counter (sb_text_start +. 10.) sb_text_width label
-        sb_text_start sb_text_width label (sb_rect_width +. 55.) st_text_width
-        status (sb_rect_width +. 45.) st_text_width status Icon.pp
-        (icon, icon_width, 130.)
+        svg_width svg_height width xlink accessible_text accessible_text
+        !counter !counter width !counter sb_rect_width Color.pp label_color
+        st_rect_width Color.pp color sb_rect_width width !counter
+        (sb_text_start +. 10.) sb_text_width label sb_text_start sb_text_width
+        label (sb_rect_width +. 55.) st_text_width status (sb_rect_width +. 45.)
+        st_text_width status Icon.pp (icon, icon_width, 130.)
     | Flat ->
       Format.fprintf fmt
         {|<svg width="%f" height="%f" viewBox="0 0 %f 200" xmlns="http://www.w3.org/2000/svg"%s role="img" aria-label="%s">

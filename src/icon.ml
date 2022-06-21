@@ -7,5 +7,4 @@ let pp fmt (icon, w, h) =
     Format.fprintf fmt
       {|<image x="40" y="35" width="%f" height="%f" xlink:href="%s"/>|} w h icon
 
-let of_string = function
-  | _s -> None
+let of_string = function _s -> None

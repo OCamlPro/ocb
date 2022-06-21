@@ -34,9 +34,7 @@ let of_string = function
   | "orange" -> Orange
   | "purple" -> Purple
   | "pink" -> Pink
-  | "gray"
-  | "grey" ->
-    Grey
+  | "gray" | "grey" -> Grey
   | "cyan" -> Cyan
   | "black" -> Black
   | custom -> Custom custom
