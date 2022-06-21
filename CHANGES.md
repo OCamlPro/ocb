@@ -4,6 +4,6 @@
 - add a unique id to avoid rendering issues
 - change the order of the svg attributes to make some linters happy
 
-## 0.0.1 - 2021-01-07
+## 0.1 - 2021-01-07
 
 - first release
