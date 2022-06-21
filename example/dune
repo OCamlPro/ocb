@@ -1,0 +1,10 @@
+(rule
+ (with-stdout-to
+  cli.svg.new
+  (run ocb --label Hello --color green --style flat --labelcolor white
+    --status Goodbye)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff cli.svg cli.svg.new)))
