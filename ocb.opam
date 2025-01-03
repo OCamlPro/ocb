@@ -10,7 +10,8 @@ homepage: "https://ocamlpro.github.io/ocb/"
 doc: "https://ocamlpro.github.io/ocb/api/"
 bug-reports: "https://github.com/OCamlPro/ocb/issues"
 depends: [
-  "ocaml" {>= "4.05"}
+  "ocaml" {>= "4.14"}
+  "cmdliner"
   "dune" {>= "3.0"}
   "prelude"
   "odoc" {with-doc}

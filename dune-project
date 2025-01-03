@@ -24,7 +24,7 @@
    "An OCaml library for SVG badge generation. There's also a command-line tool provided.")
  (depends
   (ocaml
-   (>= 4.05))
+   (>= 4.14))
   cmdliner
   dune
   prelude
