@@ -8,7 +8,7 @@ let color_conv = Arg.conv (Color.of_string, Color.pp)
 let float_conv =
   Arg.conv
     ( (fun s ->
-        match Float.of_string_opt s with
+        match Float.of_string s with
         | None -> Error (`Msg "invalid float")
         | Some f -> Ok f )
     , Fmt.float )
