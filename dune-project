@@ -1,4 +1,4 @@
-(lang dune 2.0)
+(lang dune 3.0)
 
 (name ocb)
 
@@ -25,6 +25,7 @@
  (depends
   (ocaml
    (>= 4.05))
-  (dune
-   (>= 2.0))
+  cmdliner
+  dune
+  prelude
   (odoc :with-doc)))

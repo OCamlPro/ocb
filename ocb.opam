@@ -11,11 +11,12 @@ doc: "https://ocamlpro.github.io/ocb/api/"
 bug-reports: "https://github.com/OCamlPro/ocb/issues"
 depends: [
   "ocaml" {>= "4.05"}
-  "dune" {>= "2.0"}
+  "dune" {>= "3.0"}
+  "prelude"
   "odoc" {with-doc}
 ]
 build: [
-  ["dune" "subst"] {pinned}
+  ["dune" "subst"] {dev}
   [
     "dune"
     "build"

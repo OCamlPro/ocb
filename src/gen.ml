@@ -16,26 +16,25 @@ let calc_width =
 
 let sanitize s =
   let buffer = Buffer.create @@ String.length s in
-  let fmt = Format.formatter_of_buffer buffer in
-  let add = Format.fprintf fmt in
-  let add_c = Buffer.add_char buffer in
+  let fmt = Fmt.with_buffer buffer in
   String.iter
     (function
-      | '&' -> add "&amp;"
-      | '<' -> add "&lt;"
-      | '>' -> add "&gt;"
-      | '\'' -> add "&apos;"
-      | '\"' -> add "&quot;"
-      | '@' -> add "&commat;"
-      | c -> add_c c )
+      | '&' -> Fmt.string fmt "&amp;"
+      | '<' -> Fmt.string fmt "&lt;"
+      | '>' -> Fmt.string fmt "&gt;"
+      | '\'' -> Fmt.string fmt "&apos;"
+      | '\"' -> Fmt.string fmt "&quot;"
+      | '@' -> Fmt.string fmt "&commat;"
+      | c -> Fmt.char fmt c )
     s;
+  Fmt.flush fmt ();
   Buffer.contents buffer
 
 let create_accessible_text label status =
-  if String.equal label "" then status else Format.sprintf "%s: %s" label status
+  if String.equal label "" then status else Fmt.str "%s: %s" label status
 
 let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
-    ~status () =
+  ~status () =
   let st_text_width = calc_width status in
   let st_rect_width = st_text_width +. 115. in
   let status = sanitize status in
@@ -43,7 +42,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
   let height = scale *. 20. in
   match style with
   | Classic ->
-    Format.fprintf fmt
+    Fmt.pf fmt
       {|<svg xmlns="http://www.w3.org/2000/svg" width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <linearGradient id="a" x2="0" y2="100%%">
@@ -63,7 +62,7 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       width height st_rect_width status status st_rect_width st_rect_width
       Color.pp color st_rect_width st_text_width status st_text_width status
   | Flat ->
-    Format.fprintf fmt
+    Fmt.pf fmt
       {|<svg xmlns="http://www.w3.org/2000/svg" width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <g>
@@ -78,8 +77,8 @@ let bare fmt ?(color = Color.Blue) ?(style = Style.Classic) ?(scale = 1.)
       st_text_width status st_text_width status
 
 let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
-    ?(style = Style.Classic) ?(icon = None) ?(icon_width = 13.)
-    ?(label_color = Color.Custom "555") ?(scale = 1.) ~status () =
+  ?(style = Style.Classic) ?(icon = None) ?(icon_width = 13.)
+  ?(label_color = Color.Custom "555") ?(scale = 1.) ~status () =
   if String.equal label "" && Option.is_none icon then
     bare fmt ~status ~color ~style ~scale ()
   else
@@ -109,7 +108,7 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
     match style with
     | Classic ->
       incr counter;
-      Format.fprintf fmt
+      Fmt.pf fmt
         {|<svg xmlns="http://www.w3.org/2000/svg"%s width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <linearGradient id="ocaml-ocb-a-%d" x2="0" y2="100%%">
@@ -136,7 +135,7 @@ let mk fmt ?(counter = counter) ?(label = "") ?(color = Color.Blue)
         label (sb_rect_width +. 55.) st_text_width status (sb_rect_width +. 45.)
         st_text_width status Icon.pp (icon, icon_width, 130.)
     | Flat ->
-      Format.fprintf fmt
+      Fmt.pf fmt
         {|<svg xmlns="http://www.w3.org/2000/svg"%s width="%f" height="%f" viewBox="0 0 %f 200" role="img" aria-label="%s">
   <title>%s</title>
   <g>

@@ -1,10 +1,14 @@
 (library
  (public_name ocb)
  (modules color gen icon option style verdana)
+ (libraries prelude)
+ (flags
+  (:standard -open Prelude))
  (private_modules option))
 
 (executable
- (name main)
  (public_name ocb)
- (modules main)
- (libraries ocb))
+ (modules ocb)
+ (flags
+  (:standard -open Prelude))
+ (libraries cmdliner ocb prelude))

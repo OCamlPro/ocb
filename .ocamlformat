@@ -1,4 +1,4 @@
-version=0.21.0
+version=0.27.0
 assignment-operator=end-line
 break-cases=fit
 break-fun-decl=wrap
@@ -24,8 +24,9 @@ let-and=sparse
 let-binding-spacing=compact
 let-module=compact
 margin=80
-max-indent=68
+max-indent=2
 module-item-spacing=sparse
+ocaml-version=4.14.0
 ocp-indent-compat=false
 parens-ite=false
 parens-tuple=always
