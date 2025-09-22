@@ -1,0 +1,6 @@
+(executable
+ (public_name ocb)
+ (modules ocb)
+ (flags
+  (:standard -open Prelude))
+ (libraries cmdliner fmt ocb prelude))

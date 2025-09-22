@@ -8,6 +8,8 @@
 
 (maintainers "OCamlPro <contact@ocamlpro.com>")
 
+(implicit_transitive_deps false)
+
 (source
  (github OCamlPro/ocb))
 
@@ -21,7 +23,7 @@
  (name ocb)
  (synopsis "SVG badge generator")
  (description
-   "An OCaml library for SVG badge generation. There's also a command-line tool provided.")
+  "An OCaml library for SVG badge generation. There's also a command-line tool provided.")
  (depends
   (ocaml
    (>= 4.14))
